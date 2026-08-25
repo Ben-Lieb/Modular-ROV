@@ -18,7 +18,7 @@ SoftwareSerial test(rx,tx);
 int Timeout = 1000;
 
 
-//Information to initialize I2C (Format .begin(Data, Clocl, Addr);
+//Information to initialize I2C (Format .begin(Data, Clocl, Addr));
 int index = -1;
 int Address;
 
@@ -29,9 +29,9 @@ void setup(){
   pinMode(tx, OUTPUT);
   pinMode(rx, INPUT);
 
-  Serial.begin(115200);
+  Serial.begin(19200);
   Serial.setTimeout(Timeout);
-  test.begin(115200);
+  test.begin(19200);
   test.setTimeout(Timeout);
   while(!Serial || !test); //waits until all serial ports are on
   
@@ -44,11 +44,19 @@ void setup(){
   while(index == -1){
     if(Serial.available()){
       index = Serial.read();
+      Serial.println("you suceeded");
       Address = index + 8;
       Wire.begin(Address);
     }
   }
-  test.write((index + 1));
+
+  if(last == false){
+    test.write((index + 1));
+  }
+  else if(last == true){
+    Serial.print((index+1));
+  }
+  
 
   //return final index to Pi
   while(returnedIndex == false){

@@ -23,6 +23,7 @@ const int scl = 22;
 int moduleIndex = -1;
 int Address;
 
+//recording wether or not this is the last board, and if overall indexing has completed realtive to this board
 bool last;
 bool returnedIndex = false;
 
@@ -84,6 +85,9 @@ void setup(){
   Serial.write('~');
   last = !Serial1.find('~'); 
   delay(50);
+
+
+  Serial.print("hello world");
 
   //read given index
   while(moduleIndex == -1){
